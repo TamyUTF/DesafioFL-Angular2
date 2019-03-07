@@ -2,16 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {MatTabsModule} from '@angular/material/tabs';
 import { ContactComponent } from './contact/contact.component';
+import { MaterialMoodule } from './material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FavoriteComponent } from './favorite/favorite.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContactComponent
+    ContactComponent,
+    FavoriteComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    MaterialMoodule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

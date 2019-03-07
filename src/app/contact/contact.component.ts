@@ -5,11 +5,15 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+export class ContactComponent {
+  contacts: {};
+  constructor() {
+    this.contacts = this.getAllContacts();
+    console.log(this.contacts);
+   }
+   async getAllContacts() {
+    const res = await fetch('http://contacts-api.azurewebsites.net/api/contacts/');
+    const data = await res.json();
+    return data;
   }
-
 }
