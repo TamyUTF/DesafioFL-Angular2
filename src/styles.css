@@ -3,4 +3,16 @@
 
 body{
     margin:0;
+    font-family: 'Nunito', sans-serif;
+};
+
+.container {
+    padding: 0 20px;
 }
+
+.mat-tab-nav-bar{
+    font-family: 'Nunito', sans-serif;
+}
+
+
+

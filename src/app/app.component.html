@@ -1,5 +1,14 @@
-<mat-tab-group color='accent' backgroundColor='primary'>
-  <mat-tab label="Home"> Content 1 </mat-tab>
-  <mat-tab label="Favoritos"> Content 2 </mat-tab>
-  <mat-tab label="Novo Contato"> Content 3 </mat-tab>
-</mat-tab-group>
+<nav mat-tab-nav-bar backgroundColor='primary' class="mat-body-strong">
+  <div mat-tab-group color='accent' >
+    <a mat-tab-link routerLink = "" >Contatos</a>
+    <a mat-tab-link routerLink = "/favorites">Favoritos</a>
+    <a mat-tab-link routerLink = "/form">Novo Contato</a>
+  </div>  
+</nav>
+
+  <router-outlet></router-outlet>
+
+ 
+
+
+
