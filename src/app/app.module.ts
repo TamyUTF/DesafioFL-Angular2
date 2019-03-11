@@ -3,27 +3,26 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { ContactComponent } from './contact/contact.component';
-import { MaterialMoodule } from './material';
+import { MaterialModule } from './material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FavoriteComponent } from './favorite/favorite.component';
-import { FormComponent } from './form/form.component';
-import { routing } from './app.routes';
-
+import { AppRoutingModule } from './app.routing.module';
+import { ContactModule } from './contact/contact.module';
+import { ContactRoutingModule } from './contact/contact-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContactComponent,
-    FavoriteComponent,
-    FormComponent
+    FavoriteComponent
   ],
   imports: [
     BrowserModule,
-    MaterialMoodule,
+    MaterialModule,
     BrowserAnimationsModule,
-    routing,
-    HttpClientModule
+    ContactModule,
+    HttpClientModule,
+    ContactRoutingModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
