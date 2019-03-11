@@ -13,10 +13,10 @@ const contactRoutes = [
 ];
 
 @NgModule({
-  imports:[
+  imports: [
     RouterModule.forChild(contactRoutes)
   ],
-  exports:[]
+  exports: [RouterModule]
 })
 
 export class ContactRoutingModule {}

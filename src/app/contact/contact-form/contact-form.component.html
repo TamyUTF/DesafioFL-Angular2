@@ -1,3 +1,43 @@
-<p>
-  form works!
-</p>
+<div class="form">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <mat-form-field>
+      <input matInput type="text" disabled [ngModel]="contact.id" id='disabled' name="id" hidden=true>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Nome" [ngModel]="contact.firstName" name="firstName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Sobrenome" [ngModel]="contact.lastName" name="lastName">
+    </mat-form-field>
+    <mat-form-field>
+      <input type='email' matInput placeholder="E-mail" [ngModel]="contact.email" name="email">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Sexo" [ngModel]="contact.gender" name="gender">
+        <mat-option value="f">Feminino</mat-option>
+        <mat-option value="m">Masculino</mat-option>
+      </mat-select>
+    </mat-form-field>
+      <mat-checkbox name="favorite" checked={{contact.info.isFavorite}}>Favoritar</mat-checkbox>
+    <mat-form-field>
+      <input matInput placeholder="Empresa" [ngModel]="contact?.info.company" name="company">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Avatar" [ngModel]="contact.info.avatar" name="avatar">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Endereço" [ngModel]="contact.info.address" name="address">
+    </mat-form-field>
+    <mat-form-field>
+      <input type='tel' matInput placeholder="Telefone" [ngModel]="contact.info.phone" name="phone">
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Textarea" [ngModel]="contact.info.comments" name="comments"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" >Enviar</button>
+  </form>
+
+</div>

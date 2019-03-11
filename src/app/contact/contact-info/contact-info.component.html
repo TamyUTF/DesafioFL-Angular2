@@ -1,14 +1,33 @@
 <div class = "modal">
-  <div class = "modal-container">
-    <h5>{{ contact.firstName }} {{ contact.lastName }}</h5>
+  <div class = "modal-container" #modal>
+    <div class = "modal-header" color='primary'>
+        <h2>{{ contact.firstName }} {{ contact.lastName }}</h2>
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editContact()">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="deleteContact()">
+              <mat-icon>delete</mat-icon>
+              <span>Excluir</span>
+            </button>
+          </mat-menu>        
+    </div>
     <img src={{contact.info.avatar}}>
-    <p>E-mail:</p><p>{{contact.email}}</p><br>
-    <p>Sexo:</p><p>{{contact.gender}}</p><br>
-    <p>Empresa:</p><p>{{contact.info.company}}</p><br>
-    <p>Endereço:</p><p>{{contact.info.address}}</p><br>
-    <p>Telefone:</p><p>{{contact.info.phone}}</p><br>
-    <p>Comentarios:</p><p>{{contact.info.comments}}</p><br>
-
+    <div class="modal-info" >
+      <span><p class="info-title">E-mail: </p><p> {{contact.email}}</p></span>
+      <span><p class="info-title">Sexo: </p><p> {{contact.gender}}</p></span>
+      <span><p class="info-title">Empresa: </p><p>{{contact.info.company}}</p></span>
+      <span><p class="info-title">Endereço: </p><p>{{contact.info.address}}</p></span>
+      <span><p class="info-title">Telefone: </p><p>{{contact.info.phone}}</p></span>
+      <div class="modal-comments">
+        <span><p class="info-title">Comentarios:</p><p>{{contact.info.comments}}</p></span>
+      </div>
   </div>
-
+    
+    
+  </div>
 </div>

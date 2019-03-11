@@ -6,19 +6,23 @@ import { ContactComponent } from './contact.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { MaterialModule } from './../material';
+import { ContactRoutingModule } from './contact-routing.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports:[
+  imports: [
     CommonModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    ContactRoutingModule,
+    FormsModule
   ],
-  declarations:[
+  declarations: [
     ContactComponent,
     ContactInfoComponent,
     ContactFormComponent,
   ],
-  providers:[]
+  providers: []
 })
 
 export class ContactModule {}
