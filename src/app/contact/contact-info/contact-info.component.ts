@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { ContactService } from './../../services/contact.service';
 import { Contact } from './../contact';
@@ -14,20 +15,26 @@ import { Contact } from './../contact';
 export class ContactInfoComponent implements OnInit, OnDestroy {
   subs: Subscription;
   contact: Contact;
+
   @ViewChild ('modal') modal: HTMLElement;
   constructor(private route: ActivatedRoute, private contactService: ContactService, private router: Router) {
 
   }
-
-
   ngOnInit() {
-    this.subs = this.route.params.subscribe(
+    console.log('Estou no info component');
+    this.route.params.pipe(
+      map((params: any) => params.id),
+      switchMap(id => this.contactService.getContact(id))// retorna o contato
+      )
+      .subscribe(contact => this.contact = contact);
+
+    /*this.subs = this.route.params.subscribe(
       (params: any) => {
         const id = params['id'];
-
         this.contact = this.contactService.getContact(id);
+        console.log(this.contact.firstName);
       }
-    );
+    );*/
   }
 
   editContact() {
@@ -35,14 +42,14 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   }
 
   deleteContact() {
-    
   }
 
-  outsideClick(event) {
-    console.log(this.modal);
+  close() {
+    this.router.navigate(['contact']);
   }
 
   ngOnDestroy() {
+    console.log('info component foi destruido');
     this.subs.unsubscribe();
   }
 

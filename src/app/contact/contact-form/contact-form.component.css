@@ -1,0 +1,41 @@
+.modal {
+    position: fixed;
+    top:0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+    overflow-y:auto;
+    z-index: 4;
+    align-content: center;
+    justify-items: center;
+}
+
+.modal-container {
+    position: relative;
+    background-color: #fff;
+    transition: 0.4s;
+    width: 70%;
+    margin: 50px auto;
+}
+.form {
+    padding: 10px; 
+}
+
+.form form {
+    display: grid;
+}
+
+.modal-header {
+    display: flex;
+    background-color: blueviolet;
+    color: #fff;
+}
+
+.modal-header h2{
+    margin: 0;
+}
+
+.flex-spacer {
+    display: flex;
+}

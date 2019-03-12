@@ -1,62 +1,33 @@
 import { Contact } from '../contact/contact';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap, delay } from 'rxjs/operators';
+import { tap, delay, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Subscription, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContactService {
+export class ContactService implements OnDestroy {
   private readonly API = `${environment.API}api/contacts`;
-
-  private contacts: Contact[] = [{
-    id: '01',
-    firstName: 'Maria',
-    lastName: 'Ono',
-    email: 'maria@abc.com',
-    gender: 'f',
-    isFavorite: true,
-    info: {
-      company: 'Casa',
-      avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/souuf/128.jpg',
-      address: 'Rua bla bla,123 - centro',
-      phone: '1234-5678',
-      comments: 'Uma mulher mto legal'
-  }}, {id: '02',
-  firstName: 'Rioki',
-  lastName: 'Ono',
-  email: 'maria@abc.com',
-  gender: 'f',
-  isFavorite: true,
-  info: {
-    company: 'Casa',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/souuf/128.jpg',
-    address: 'Rua bla bla,123 - centro',
-    phone: '1234-5678',
-    comments: 'Uma mulher mto legal'
-  }}];
+  private contacts$: Observable<Contact[]>;
+  private subs: Subscription;
 
   constructor(private http: HttpClient) { }
 
   getContacts() {
-    //return this.http.get<Contact[]>(this.API);
-    return this.contacts;
+    this.contacts$ = this.http.get<Contact[]>((this.API));
   }
 
-  getContact(id: string){
-    for (const contact of this.contacts) {
-      if (contact.id == id){
-        return contact;
-      }
-    }
+  getContact(id: any) {
+    console.log(`${this.API}/${id}`);
+    return this.http.get<Contact>((`${this.API}/${id}`));
   }
-//antes de requisitar ao servidor, inicializar um array para consultar, e atualizar a cada add, del e up
+
   list() {
-    this.contacts
     return this.http.get< Contact[] >(this.API)
     .pipe(
-      delay(1500),
+      delay(2000),
       tap(console.log));
   }
 
@@ -64,7 +35,11 @@ export class ContactService {
 
   }
 
-  updateContact(contact: Contact, id) {
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
 
+  updateContact(contact: Contact, id) {
+    this.contacts.push(id, contact);
   }
 }

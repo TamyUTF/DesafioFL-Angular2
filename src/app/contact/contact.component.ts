@@ -3,6 +3,7 @@ import { ContactService } from '../services/contact.service';
 import { Component, OnInit } from '@angular/core';
 import { Contact } from './contact';
 import { Observable } from '../../../node_modules/rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-contact',
@@ -11,19 +12,17 @@ import { Observable } from '../../../node_modules/rxjs';
 })
 export class ContactComponent implements OnInit {
 
-  //contacts$: Observable<Contact[]>;
-  contacts: Contact[];
-  constructor(private contactService: ContactService) {
+  contacts$: Observable<Contact[]>;
+  constructor(private contactService: ContactService, private router: Router, private route: ActivatedRoute) {
 
   }
 
-  contactInfo(contact){
-
+  showInfo(contact) {
+    this.router.navigate(['/contact', contact]);
   }
 
   ngOnInit() {
-    //this.contacts$ = this.contactService.list();
-    this.contacts = this.contactService.getContacts();
-    console.log('estou no contact component');
+    this.contactService.getContacts();
+    this.contacts$ = this.contactService.list();
   }
 }

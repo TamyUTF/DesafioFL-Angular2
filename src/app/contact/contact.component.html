@@ -1,7 +1,7 @@
 <div class="container">
 
-<div *ngIf = "contacts; else loading">
-  <mat-card *ngFor="let contact of contacts" [routerLink]="['/contact', contact.id]">
+<div *ngIf = "contacts$ | async as contacts; else loading">
+  <mat-card *ngFor="let contact of contacts" [routerLink] ="['/contact', contact.id]">
     <mat-card-header>
       <img mat-card-avatar src={{contact.info.avatar}}>
       <mat-card-title>{{ contact.firstName }} {{ contact.lastName }}</mat-card-title>

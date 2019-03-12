@@ -46,3 +46,7 @@
   font-weight: bold;
   color: #400080;
 }
+
+.modal-comments span p {
+  line-height: normal;
+}
