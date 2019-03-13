@@ -22,7 +22,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     console.log('Estou no info component');
-    this.route.params.pipe(
+    this.subs = this.route.params.pipe(
       map((params: any) => params.id),
       switchMap(id => this.contactService.getContact(id))// retorna o contato
       )
@@ -45,7 +45,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.router.navigate(['contact']);
+    this.router.navigate(['']);
   }
 
   ngOnDestroy() {

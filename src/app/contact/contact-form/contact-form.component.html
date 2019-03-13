@@ -7,39 +7,41 @@
         <mat-icon>clear</mat-icon>
       </button>
     </div>
-    <div class="form">
-      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div class="form" >
+      <form [formGroup]='form' (ngSubmit)="onSubmit()">
         <mat-form-field>
-          <input matInput placeholder="Nome" [ngModel]="contact.firstName" name="firstName">
+          <input matInput placeholder="Nome" formControlName="firstName">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Sobrenome" [ngModel]="contact.lastName" name="lastName">
+          <input matInput placeholder="Sobrenome" formControlName="lastName">
         </mat-form-field>
         <mat-form-field>
-          <input type='email' matInput placeholder="E-mail" [ngModel]="contact.email" name="email">
+          <input matInput placeholder="E-mail" formControlName="email">
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Sexo" [ngModel]="contact.gender" name="gender">
+          <mat-select placeholder="Sexo" formControlName="gender">
             <mat-option value="f">Feminino</mat-option>
             <mat-option value="m">Masculino</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-checkbox name="favorite" checked={{contact.info.isFavorite}}>Favoritar</mat-checkbox>
-        <mat-form-field>
-          <input matInput placeholder="Empresa" [ngModel]="contact.info.company" name="company">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Avatar" [ngModel]="contact.info.avatar" name="avatar">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Endereço" [ngModel]="contact.info.address" name="address">
-        </mat-form-field>
-        <mat-form-field>
-          <input type='tel' matInput placeholder="Telefone" [ngModel]="contact.info.phone" name="phone">
-        </mat-form-field>
-        <mat-form-field>
-          <textarea matInput placeholder="Textarea" [ngModel]="contact.info.comments" name="comments"></textarea>
-        </mat-form-field>
+        <div  class="form" formGroupName = "info">
+          <mat-form-field>
+            <input matInput placeholder="Empresa"  formControlName="company">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Avatar" formControlName="avatar">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Endereço" formControlName="address">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Telefone" formControlName="phone">
+          </mat-form-field>
+          <mat-form-field>
+            <textarea matInput placeholder="Textarea" formControlName="comments"></textarea>
+          </mat-form-field>
+        </div>
+        
         <button mat-raised-button color="primary" type="submit">Enviar</button>
       </form>
     </div>

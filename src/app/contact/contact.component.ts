@@ -17,6 +17,10 @@ export class ContactComponent implements OnInit {
 
   }
 
+  openModal(id){
+    
+  }
+
   showInfo(contact) {
     this.router.navigate(['/contact', contact]);
   }

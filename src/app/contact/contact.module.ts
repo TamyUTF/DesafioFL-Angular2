@@ -7,7 +7,7 @@ import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { MaterialModule } from './../material';
 import { ContactRoutingModule } from './contact-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -15,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     MaterialModule,
     ContactRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ContactComponent,

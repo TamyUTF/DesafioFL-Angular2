@@ -9,6 +9,7 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { AppRoutingModule } from './app.routing.module';
 import { ContactModule } from './contact/contact.module';
 import { ContactRoutingModule } from './contact/contact-routing.module';
+import { ContactService } from './services/contact.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { ContactRoutingModule } from './contact/contact-routing.module';
     ContactRoutingModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ContactService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

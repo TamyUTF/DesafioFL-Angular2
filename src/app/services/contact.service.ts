@@ -32,7 +32,10 @@ export class ContactService implements OnDestroy {
   }
 
   deleteContact(id) {
-
+    this.http.delete(`${this.API}/${id}`).subscribe(
+      res => console.log(res),
+      error => console.error('Ocorreu um erro' + error)
+    );
   }
 
   ngOnDestroy() {
@@ -40,6 +43,13 @@ export class ContactService implements OnDestroy {
   }
 
   updateContact(contact: Contact, id) {
-    this.contacts.push(id, contact);
+    this.http.post(`${this.API}/${id}`, contact).subscribe(
+      res => console.log(res),
+      error => console.error('Ocorreu um erro' + error)
+    );
+  }
+
+  createContact(contact) {
+    this.http.post(this.API, contact);
   }
 }
