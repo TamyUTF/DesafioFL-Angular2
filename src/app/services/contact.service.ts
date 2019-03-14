@@ -1,7 +1,7 @@
 import { Contact } from '../contact/contact';
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap, delay, map } from 'rxjs/operators';
+import { tap, delay, map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Subscription, Observable } from 'rxjs';
 
@@ -11,24 +11,24 @@ import { Subscription, Observable } from 'rxjs';
 export class ContactService implements OnDestroy {
   private readonly API = `${environment.API}api/contacts`;
   private contacts$: Observable<Contact[]>;
+  contacts: Contact[];
   private subs: Subscription;
 
   constructor(private http: HttpClient) { }
 
   getContacts() {
-    this.contacts$ = this.http.get<Contact[]>((this.API));
+    return this.contacts;
   }
 
   getContact(id: any) {
     console.log(`${this.API}/${id}`);
-    return this.http.get<Contact>((`${this.API}/${id}`));
+    return this.http.get<Contact>((`${this.API}/${id}`)).pipe(take(1));
   }
 
   list() {
     return this.http.get< Contact[] >(this.API)
     .pipe(
-      delay(2000),
-      tap(console.log));
+      delay(2000));
   }
 
   deleteContact(id) {

@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
     exports: [
@@ -27,7 +28,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatPaginatorModule
     ]
 })
 export class MaterialModule { }

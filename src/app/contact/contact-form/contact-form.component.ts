@@ -24,6 +24,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.form = this.fBuilder.group({
+      id:        [null],
       firstName: [null],
       lastName:  [null],
       email:     [null],
@@ -40,13 +41,36 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
-    console.log('estou no form');
     this.sub = this.route.params.subscribe(
       (params: any) => {
-        const id = params['id'];
-        this.contact = this.contactService.getContact(id); // retorna o contato
+        const id = params.id;
+        const contact$ = this.contactService.getContact(id); // retorna o contato
+        if(contact$) {
+          contact$.subscribe(contact => {
+            this.updateForm(contact);
+          });
+        }
+
       }
     );
+  }
+
+  updateForm(contact) {
+    this.form.patchValue({
+      id: contact.id,
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      email: contact.email,
+      gender: contact.gender,
+      info: {
+        company: contact.info.company,
+        avatar: contact.info.avatar,
+        address: contact.info.address,
+        phone: contact.info.phone,
+        comments: contact.info.comments
+      }
+    });
+
   }
 
   updateContact(id, contact) {

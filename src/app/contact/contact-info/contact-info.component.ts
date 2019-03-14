@@ -25,16 +25,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     this.subs = this.route.params.pipe(
       map((params: any) => params.id),
       switchMap(id => this.contactService.getContact(id))// retorna o contato
-      )
-      .subscribe(contact => this.contact = contact);
-
-    /*this.subs = this.route.params.subscribe(
-      (params: any) => {
-        const id = params['id'];
-        this.contact = this.contactService.getContact(id);
-        console.log(this.contact.firstName);
-      }
-    );*/
+      ).subscribe(contact => this.contact = contact);
   }
 
   editContact() {
