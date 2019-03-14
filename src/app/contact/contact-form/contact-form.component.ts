@@ -21,6 +21,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
               private router: Router,
               private fBuilder: FormBuilder) { }
   form: FormGroup;
+  id: any;
 
   createForm() {
     this.form = this.fBuilder.group({
@@ -43,14 +44,13 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     this.createForm();
     this.sub = this.route.params.subscribe(
       (params: any) => {
-        const id = params.id;
-        const contact$ = this.contactService.getContact(id); // retorna o contato
-        if(contact$) {
+        this.id = params.id;
+        const contact$ = this.contactService.getContact(this.id); // retorna o contato
+        if (contact$) { // se existe é um edit
           contact$.subscribe(contact => {
             this.updateForm(contact);
           });
         }
-
       }
     );
   }
@@ -77,9 +77,18 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   }
 
-  onSubmit() {
-    console.log(this.form);
+  createContact(contact) {
+
   }
+
+  onSubmit() {
+    if (this.id !== null) {
+      this.updateContact( this.id, JSON.stringify(this.form.value));
+    } else {
+      this.createContact(JSON.stringify(this.form.value));
+    }
+  }
+
 
  /* onSubmit(form) {
 
@@ -92,7 +101,7 @@ close() {
   this.router.navigate(['']);
 }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     console.log('form destruido');
     this.sub.unsubscribe();
   }
@@ -101,5 +110,4 @@ close() {
   addContact(contact) {
 
   }
-
 }

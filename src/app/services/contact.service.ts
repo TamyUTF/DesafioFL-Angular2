@@ -32,7 +32,7 @@ export class ContactService implements OnDestroy {
   }
 
   deleteContact(id) {
-    this.http.delete(`${this.API}/${id}`).subscribe(
+    this.http.delete(`${this.API}/${id}`).pipe(take(1)).subscribe(
       res => console.log(res),
       error => console.error('Ocorreu um erro' + error)
     );
@@ -43,7 +43,7 @@ export class ContactService implements OnDestroy {
   }
 
   updateContact(contact: Contact, id) {
-    this.http.post(`${this.API}/${id}`, contact).subscribe(
+    this.http.post(`${this.API}/${id}`, contact).pipe(take(1)).subscribe(
       res => console.log(res),
       error => console.error('Ocorreu um erro' + error)
     );
