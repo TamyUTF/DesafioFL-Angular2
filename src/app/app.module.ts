@@ -10,11 +10,14 @@ import { AppRoutingModule } from './app.routing.module';
 import { ContactModule } from './contact/contact.module';
 import { ContactRoutingModule } from './contact/contact-routing.module';
 import { ContactService } from './services/contact.service';
+import { PagerService } from './services/pager.service';
+import { MyDialogComponent } from './services/my-dialog/my-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    MyDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import { ContactService } from './services/contact.service';
     ContactRoutingModule,
     AppRoutingModule
   ],
-  providers: [ContactService],
+  entryComponents: [MyDialogComponent],
+  providers: [ContactService, PagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

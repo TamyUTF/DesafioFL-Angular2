@@ -21,10 +21,13 @@
     "@angular/platform-browser": "7.2.8",
     "@angular/platform-browser-dynamic": "7.2.8",
     "@angular/router": "7.2.8",
+    "@types/underscore": "^1.8.13",
     "core-js": "2.6.5",
+    "jw-angular-pagination": "^1.0.5",
     "ng2-bootstrap": "1.6.3",
     "rxjs": "6.4.0",
     "tslib": "1.9.3",
+    "underscore": "^1.9.1",
     "zone.js": "0.8.29"
   },
   "devDependencies": {

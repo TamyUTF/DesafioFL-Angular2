@@ -9,6 +9,7 @@ import { MaterialModule } from './../material';
 import { ContactRoutingModule } from './contact-routing.module';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,11 +18,13 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
     ContactRoutingModule,
     FormsModule,
     ReactiveFormsModule
-  ],
+    ],
   declarations: [
     ContactComponent,
     ContactInfoComponent,
     ContactFormComponent,
+  ],
+  entryComponents: [
   ],
   providers: []
 })

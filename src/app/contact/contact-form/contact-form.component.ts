@@ -15,13 +15,14 @@ import { ContactService } from './../../services/contact.service';
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   sub: Subscription;
-  contact: Observable<Contact>;
+  contact$: Observable<Contact>;
+  form: FormGroup;
+  id: any;
+
   constructor(private route: ActivatedRoute,
               private contactService: ContactService,
               private router: Router,
               private fBuilder: FormBuilder) { }
-  form: FormGroup;
-  id: any;
 
   createForm() {
     this.form = this.fBuilder.group({
@@ -44,10 +45,10 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     this.createForm();
     this.sub = this.route.params.subscribe(
       (params: any) => {
-        this.id = params.id;
-        const contact$ = this.contactService.getContact(this.id); // retorna o contato
-        if (contact$) { // se existe é um edit
-          contact$.subscribe(contact => {
+        if (params.id !== undefined) { // é para editar
+          this.id = params;
+          this.contact$ = this.contactService.getContact(this.id);
+          this.sub = this.contact$.subscribe(contact => {
             this.updateForm(contact);
           });
         }
@@ -73,30 +74,10 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   }
 
-  updateContact(id, contact) {
-
-  }
-
-  createContact(contact) {
-
-  }
-
   onSubmit() {
-    if (this.id !== null) {
-      this.updateContact( this.id, JSON.stringify(this.form.value));
-    } else {
-      this.createContact(JSON.stringify(this.form.value));
-    }
+    this.catchContactData();
   }
 
-
- /* onSubmit(form) {
-
-    console.log(form.value); // isso passa o valor do formulário
-
-    this.router.navigate(['/contact', this.contact.id]);
-  }
-*/
 close() {
   this.router.navigate(['']);
 }
@@ -106,8 +87,28 @@ close() {
     this.sub.unsubscribe();
   }
 
+  catchContactData() {
 
-  addContact(contact) {
-
+    const contact: Contact = {
+    firstName: this.form.value.firstName,
+    lastName: this.form.value.lastName,
+    email: this.form.value.email,
+    gender: this.form.value.gender,
+    isFavorite: false,
+    info: {
+      company: this.form.value.info.company,
+      avatar: this.form.value.info.avatar,
+      address: this.form.value.info.address,
+      phone: this.form.value.info.phone,
+      comments: this.form.value.info.comments,
+    }
+  };
+    console.log(contact);
+    if (this.id !== undefined) {
+      this.contactService.updateContact(contact, this.id);
+    } else {
+      this.contactService.createContact(contact);
+    }
   }
+
 }

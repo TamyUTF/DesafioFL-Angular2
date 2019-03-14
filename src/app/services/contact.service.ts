@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap, delay, map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Subscription, Observable } from 'rxjs';
+import { AnyARecord } from 'dns';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +27,13 @@ export class ContactService implements OnDestroy {
   }
 
   list() {
-    return this.http.get< Contact[] >(this.API)
+    return this.http.get<Contact[]>(this.API)
     .pipe(
       delay(2000));
   }
 
   deleteContact(id) {
-    this.http.delete(`${this.API}/${id}`).pipe(take(1)).subscribe(
-      res => console.log(res),
+    this.http.delete(`${this.API}/${id}`).pipe(take(1)).subscribe(console.log,
       error => console.error('Ocorreu um erro' + error)
     );
   }
@@ -42,7 +42,8 @@ export class ContactService implements OnDestroy {
     this.subs.unsubscribe();
   }
 
-  updateContact(contact: Contact, id) {
+  updateContact(contact, id: any) {
+    console.log('estou no update');
     this.http.post(`${this.API}/${id}`, contact).pipe(take(1)).subscribe(
       res => console.log(res),
       error => console.error('Ocorreu um erro' + error)
@@ -50,6 +51,10 @@ export class ContactService implements OnDestroy {
   }
 
   createContact(contact) {
-    this.http.post(this.API, contact);
+    console.log('estou no create');
+    this.http.post(this.API, contact).pipe(take(1)).subscribe(
+      res => console.log(res),
+      error => console.error('Ocorreu um erro' + error)
+    );
   }
 }

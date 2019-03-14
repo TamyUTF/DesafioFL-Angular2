@@ -22,8 +22,12 @@
     padding: 10px; 
 }
 
-.form form {
+.form-info {
     display: grid;
+}
+
+.form-info button {
+    width: 100%;
 }
 
 .modal-header {

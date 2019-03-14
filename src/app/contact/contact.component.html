@@ -16,7 +16,7 @@
       <img mat-card-avatar src={{contact.info.avatar}}>
       <mat-card-title>{{ contact.firstName }} {{ contact.lastName }}</mat-card-title>
       <div class="flex-spacer"></div>
-      <mat-icon color="warn">favorite</mat-icon>
+      <mat-icon *ngIf = "contact.isFavorite" color="warn">favorite</mat-icon>
       <mat-card-subtitle>{{ contact.info.phone }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -29,6 +29,18 @@
         <button mat-button color="warn">Deletar</button>
       </mat-card-actions>
   </mat-card>
+  <!--div *ngIf="pager.pages && pager.pages.length" class="pagination">
+    <button mat-icon-button
+      [ngClass]="{disabled:page.currentPage === 1}"
+      (click)="setPage(pager.currentPage - 1)">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{ page }}</span>
+    <button mat-icon-button
+      [ngClass]="{disabled:page.currentPage === pager.totalPages}"
+      (click)="setPage(pager.currentPage + 1)">
+    <mat-icon>arrow_forward</mat-icon></button>
+  </div-->
 </div>
 
 <ng-template #loading >
