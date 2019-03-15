@@ -19,7 +19,12 @@
     margin: 50px auto;
 }
 .form {
-    padding: 10px; 
+    padding: 10px;
+}
+
+.form-small-info mat-form-fiel{
+  margin: 0 20px;
+  display: flex;
 }
 
 .form-info {
@@ -37,7 +42,11 @@
 }
 
 .modal-header h2{
-    margin: 0;
+    margin: 10px;
+}
+
+.modal-header mat-icon {
+  padding: 15px;
 }
 
 .flex-spacer {

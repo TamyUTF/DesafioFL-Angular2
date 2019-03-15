@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { tap, delay, map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Subscription, Observable } from 'rxjs';
-import { AnyARecord } from 'dns';
 
 @Injectable({
   providedIn: 'root'
@@ -42,17 +41,18 @@ export class ContactService implements OnDestroy {
     this.subs.unsubscribe();
   }
 
-  updateContact(contact, id: any) {
+  updateContact(contact, id: string) {
     console.log('estou no update');
-    this.http.post(`${this.API}/${id}`, contact).pipe(take(1)).subscribe(
+    console.log(contact);
+    this.http.put(`${this.API}/${id}`, contact).pipe(take(1)).subscribe(
       res => console.log(res),
-      error => console.error('Ocorreu um erro' + error)
+      error => console.log(error)
     );
   }
 
   createContact(contact) {
     console.log('estou no create');
-    this.http.post(this.API, contact).pipe(take(1)).subscribe(
+    this.subs = this.http.post(this.API, contact).subscribe(
       res => console.log(res),
       error => console.error('Ocorreu um erro' + error)
     );

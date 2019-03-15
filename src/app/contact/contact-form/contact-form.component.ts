@@ -17,7 +17,8 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   sub: Subscription;
   contact$: Observable<Contact>;
   form: FormGroup;
-  id: any;
+  id: string;
+  edit: boolean;
 
   constructor(private route: ActivatedRoute,
               private contactService: ContactService,
@@ -46,11 +47,15 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe(
       (params: any) => {
         if (params.id !== undefined) { // é para editar
-          this.id = params;
+          this.id = params.id;
+          console.log(this.id);
+          this.edit = true;
           this.contact$ = this.contactService.getContact(this.id);
           this.sub = this.contact$.subscribe(contact => {
             this.updateForm(contact);
           });
+        } else {
+          this.edit = false;
         }
       }
     );
@@ -89,7 +94,8 @@ close() {
 
   catchContactData() {
 
-    const contact: Contact = {
+    const contact: any = {
+    id: this.id,
     firstName: this.form.value.firstName,
     lastName: this.form.value.lastName,
     email: this.form.value.email,

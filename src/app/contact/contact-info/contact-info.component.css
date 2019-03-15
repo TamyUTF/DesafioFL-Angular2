@@ -1,3 +1,9 @@
+@media only screen and (max-width: 720px){
+  .modal-contact {
+    display: block !important;
+  }
+}
+
 .modal {
   position: fixed;
   top:0;
@@ -25,14 +31,35 @@
   color: #fff;
 }
 
+.modal-header .flex-spacer {
+  display: flex;
+}
+
+.modal-header .mat-icon-button {
+  font-size: 30px;
+  padding: 20px;
+}
+
 .modal-container img {
+  width: 128px;
+  height: 128px;
   margin: 10px;
   position: relative;
   display:block;
 }
+
+.img-fav mat-slide-toggle {
+  margin: 10px;
+}
+
+.mat-slide-toggle-content {
+  display: contents;
+}
+
 .modal-info{
   padding: 10px;
   display:block;
+  position: relative;
 }
 
 .modal-info span {
@@ -47,6 +74,15 @@
   color: #400080;
 }
 
+.modal-contact {
+  display: flex;
+}
+
+.modal-comments {
+  border-top: 1px solid #c0c0c0;
+  margin: 10px;
+}
 .modal-comments span p {
   line-height: normal;
 }
+
