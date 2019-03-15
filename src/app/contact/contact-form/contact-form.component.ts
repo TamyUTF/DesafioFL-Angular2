@@ -2,7 +2,7 @@ import { tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Contact } from './../contact';
 import { ContactService } from './../../services/contact.service';
@@ -28,17 +28,18 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   createForm() {
     this.form = this.fBuilder.group({
       id:        [null],
-      firstName: [null],
-      lastName:  [null],
-      email:     [null],
-      gender:    [null],
+      firstName: [null, [Validators.required, Validators.min(3)]],
+      lastName:  [null, [Validators.required, Validators.min(3)]],
+      email:     [null, [Validators.required, Validators.email]],
+      gender:    [null, [Validators.required]],
       info: this.fBuilder.group({
-        company:  [null],
+        company:  [null, [Validators.required], Validators.min(3)],
         avatar:   [null],
-        address:  [null],
-        phone:    [null],
-        comments: [null]
-      })
+        address:  [null, Validators.min(3)],
+        phone:    [null, [Validators.pattern('^[0-9]*$'), Validators.minLength(8)]],
+        comments: [null],
+      }),
+      isFavorite: [false],
     });
   }
 
@@ -62,7 +63,11 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   }
 
   updateForm(contact) {
-    this.form.patchValue({
+    console.log('estou aq');
+    console.log(contact);
+    console.log(this.form.value);
+    this.form.patchValue(contact);
+    /*this.form.patchValue({
       id: contact.id,
       firstName: contact.firstName,
       lastName: contact.lastName,
@@ -75,8 +80,8 @@ export class ContactFormComponent implements OnInit, OnDestroy {
         phone: contact.info.phone,
         comments: contact.info.comments
       }
-    });
-
+    });*/
+    console.log('estou aq2');
   }
 
   onSubmit() {
@@ -93,7 +98,6 @@ close() {
   }
 
   catchContactData() {
-
     const contact: any = {
     id: this.id,
     firstName: this.form.value.firstName,
@@ -101,13 +105,11 @@ close() {
     email: this.form.value.email,
     gender: this.form.value.gender,
     isFavorite: false,
-    info: {
-      company: this.form.value.info.company,
-      avatar: this.form.value.info.avatar,
-      address: this.form.value.info.address,
-      phone: this.form.value.info.phone,
-      comments: this.form.value.info.comments,
-    }
+    company: this.form.value.info.company,
+    avatar: this.form.value.info.avatar,
+    address: this.form.value.info.address,
+    phone: this.form.value.info.phone,
+    comments: this.form.value.info.comments,
   };
     console.log(contact);
     if (this.id !== undefined) {

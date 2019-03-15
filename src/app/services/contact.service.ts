@@ -12,12 +12,27 @@ export class ContactService implements OnDestroy {
   private readonly API = `${environment.API}api/contacts`;
   private contacts$: Observable<Contact[]>;
   contacts: Contact[];
+  contact: Contact;
   private subs: Subscription;
 
   constructor(private http: HttpClient) { }
 
   getContacts() {
     return this.contacts;
+  }
+
+  setContact(c) {
+    this.contact.id = c.id;
+    this.contact.firstName = c.value.firstName;
+    this.contact.lastName = c.value.lastName;
+    this.contact.email = c.value.email;
+    this.contact.gender = c.value.gender;
+    this.contact.isFavorite = c.isFavorite;
+    this.contact.info.company = c.value.info.company;
+    this.contact.info.avatar = c.value.info.avatar;
+    this.contact.info.address = c.value.info.address;
+    this.contact.info.phone = c.value.info.phone;
+    this.contact.info.comments = c.value.info.comments;
   }
 
   getContact(id: any) {

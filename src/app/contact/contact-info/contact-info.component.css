@@ -30,15 +30,22 @@
   background-color: blueviolet;
   color: #fff;
 }
-
+.modal-header h2 {
+  margin: 20px;
+}
 .modal-header .flex-spacer {
   display: flex;
 }
 
 .modal-header .mat-icon-button {
-  font-size: 30px;
-  padding: 20px;
+  font-size: 50pt;
+  padding: 10px !important; 
 }
+.bt-close {
+  height: 50px;
+  width: 50px;
+}
+
 
 .modal-container img {
   width: 128px;

@@ -22,9 +22,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
   declarations: [
     ContactComponent,
     ContactInfoComponent,
-    ContactFormComponent,
-  ],
-  entryComponents: [
+    ContactFormComponent
   ],
   providers: []
 })

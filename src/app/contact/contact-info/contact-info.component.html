@@ -1,5 +1,5 @@
 <div class = "modal">
-  <div class = "modal-container" #modal>
+  <div class = "modal-container"  #modal>
     <div class = "modal-header" color='primary'>
         <h2 *ngIf="contact">{{ contact.firstName }} {{ contact.lastName }}</h2>
         <div class = "flex-spacer"></div>
@@ -16,13 +16,17 @@
               <span>Excluir</span>
             </button>
           </mat-menu>
-          <button mat-icon-button routerLink = "">
+          <button class="bt-close" mat-icon-button (click)="close()">
             <mat-icon>clear</mat-icon>
           </button>
     </div>
     <section class = "modal-contact">
       <section class="img-fav">
-        <mat-slide-toggle color="accent">
+        <mat-slide-toggle 
+        color="accent"
+        (change)= "favorite($event)"
+        [checked] = "favAux"
+        >
           Favoritar
           <mat-icon color="warn">favorite</mat-icon>
         </mat-slide-toggle>

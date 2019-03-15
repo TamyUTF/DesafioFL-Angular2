@@ -1,60 +1,65 @@
 <div class="modal">
-  <div class="modal-container">
-    <div class = "modal-header">
-      <h2 *ngIf="edit">Editar Contato</h2>
-      <h2 *ngIf="!edit">Novo Contato</h2>
-      <div class="flex-spacer"></div>
-      <button mat-icon-button (click)="close()">
-        <mat-icon>clear</mat-icon>
-      </button>
-    </div>
-    <div class="form" >
-          <form [formGroup]='form' (ngSubmit)="onSubmit()">
-            <div class = "form-small-info" >
-              <mat-form-field appearance="outline">
-                <mat-label>Nome</mat-label>
-                <input matInput placeholder="Nome" formControlName="firstName" />
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                  <mat-label>Sobrenome</mat-label>
-                <input matInput placeholder="Sobrenome" formControlName="lastName">
-              </mat-form-field><br>
-              <mat-form-field appearance="outline">
-                  <mat-label>E-mail</mat-label>
-                <input matInput placeholder="E-mail" formControlName="email">
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Sexo</mat-label>
-                <mat-select placeholder="Sexo" formControlName="gender">
-                  <mat-option value="f" selected="contact.gender === 'f'" >Feminino</mat-option>
-                  <mat-option value="m" selected="contact.gender === 'm'">Masculino</mat-option>
-                </mat-select>
-              </mat-form-field>
+    <div class="modal-container">
+      <div class = "modal-header">
+        <h2 *ngIf="edit">Editar Contato</h2>
+        <h2 *ngIf="!edit">Novo Contato</h2>
+        <div class="flex-spacer"></div>
+        <button mat-icon-button (click)="close()">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+      <div class="form" >
+            <form [formGroup]='form' (ngSubmit)="onSubmit()">
+              <div class = "form-small-info" >
+                <mat-form-field appearance="outline">
+                  <mat-label>Nome</mat-label>
+                  <input matInput placeholder="Nome" formControlName="firstName" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Sobrenome</mat-label>
+                  <input matInput placeholder="Sobrenome" formControlName="lastName">
+                </mat-form-field><br>
+                <mat-form-field appearance="outline">
+                    <mat-label>E-mail</mat-label>
+                  <input matInput placeholder="E-mail" formControlName="email">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Sexo</mat-label>
+                  <mat-select placeholder="Sexo" formControlName="gender">
+                    <mat-option value="f" selected="contact.gender === 'f'" >Feminino</mat-option>
+                    <mat-option value="m" selected="contact.gender === 'm'">Masculino</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            <div  class="form-info"  >
+  
+                <mat-form-field appearance="outline" formGroupName = "info">
+                  <mat-label>Empresa</mat-label>
+                  <input matInput placeholder="Empresa"  formControlName="company">
+                </mat-form-field>
+  
+                <mat-form-field appearance="outline" formGroupName = "info">
+                  <mat-label>Avatar</mat-label>
+                  <input matInput placeholder="Avatar" formControlName="avatar">
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline" formGroupName = "info">
+                  <mat-label>Endereço</mat-label>
+                  <input matInput placeholder="Endereço" formControlName="address">
+                </mat-form-field>
+                <mat-form-field appearance="outline" formGroupName = "info">
+                  <mat-label>Telefone</mat-label>
+                  <input matInput placeholder="Telefone" formControlName="phone">
+                </mat-form-field>
+                <mat-form-field appearance="outline" formGroupName = "info">
+                  <mat-label>Comentários</mat-label>
+                  <textarea matInput placeholder="Textarea" formControlName="comments"></textarea>
+                </mat-form-field>
+  
             </div>
-          <div  class="form-info" formGroupName = "info">
-            <mat-form-field appearance="outline">
-            <mat-label>Empresa</mat-label>
-            <input matInput placeholder="Empresa"  formControlName="company">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Avatar</mat-label>
-              <input matInput placeholder="Avatar" formControlName="avatar">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Endereço</mat-label>
-              <input matInput placeholder="Endereço" formControlName="address">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Telefone</mat-label>
-              <input matInput placeholder="Telefone" formControlName="phone">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Comentários</mat-label>
-              <textarea matInput placeholder="Textarea" formControlName="comments"></textarea>
-            </mat-form-field>
-          </div>
-        <button mat-raised-button color="primary" type="submit">Enviar</button>
-      </form>
+          <button mat-raised-button color="primary" type="submit">Enviar</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+  

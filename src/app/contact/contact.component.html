@@ -11,7 +11,7 @@
 <div class="container">
 
 <div *ngIf = "contacts$ | async as contacts; else loading">
-  <mat-card *ngFor="let contact of contacts" [routerLink] ="['/contact', contact.id]">
+  <mat-card *ngFor="let contact of contacts | slice: startIndex : endIndex" [routerLink] ="['/contact', contact.id]">
     <mat-card-header>
       <img mat-card-avatar src={{contact.info.avatar}}>
       <mat-card-title>{{ contact.firstName }} {{ contact.lastName }}</mat-card-title>
@@ -29,6 +29,18 @@
         <button mat-button color="warn">Deletar</button>
       </mat-card-actions>
   </mat-card>
+
+  <div class = "paginator">
+    <mat-paginator
+        [length]="contacts.length"
+        [pageSize]="pageSize"
+        [hidePageSize]= "true"
+        [showFirstLastButtons]="false"
+        (page)="pageEvent = getPaginator($event)"
+      >
+    </mat-paginator>
+  </div>
+
   <!--div *ngIf="pager.pages && pager.pages.length" class="pagination">
     <button mat-icon-button
       [ngClass]="{disabled:page.currentPage === 1}"

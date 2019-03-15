@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { Contact } from './contact';
 import { Observable } from '../../../node_modules/rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PagerService } from './../services/pager.service';
 
 @Component({
   selector: 'app-contact',
@@ -14,13 +13,14 @@ import { PagerService } from './../services/pager.service';
 export class ContactComponent implements OnInit {
   constructor(private contactService: ContactService,
               private router: Router,
-              private route: ActivatedRoute,
-              private pagerService: PagerService) { }
+              private route: ActivatedRoute) { }
 
   contacts$: Observable<Contact[]>;
   contacts: Contact[];
-  pager: any = {};
-  pagedItems: any[];
+  pageIndex = 0;
+  pageSize = 5;
+  startIndex = 0;
+  endIndex = 5;
 
 
   showInfo(contact ) {
@@ -28,19 +28,36 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.contacts$ = this.contactService.list();
-    this.contactService.list()
-      .subscribe(data => {
-        this.contacts = data;
-        this.setPage(1);
-      });
+    this.load();
+
   }
 
-  setPage(page: number) {
+  load() {
+    this.contacts$ = this.contactService.list();
+    this.pageIndex = 0;
+    this.pageSize = 6;
+    this.startIndex = 0;
+    this.endIndex = 6;
+  }
+
+  getPaginator(event) {
+    if (event.pageIndex === this.pageIndex + 1) {
+      this.startIndex = this.startIndex + this.pageSize;
+      this.endIndex =  this.endIndex + this.pageSize;
+     } else if (event.pageIndex === this.pageIndex - 1) {
+     this.startIndex = this.startIndex - this.pageSize;
+     this.endIndex =  this.endIndex - this.pageSize;
+    }
+    this.pageIndex = event.pageIndex;
+  }
+
+
+
+  /*setPage(page: number) {
     if (page < 1 || page > this.pager.totalPages) {
       return;
     }
     this.pager = this.pagerService.getPager(this.contacts.length, page);
     this.pagedItems = this.contacts.slice(this.pager.startIndex, this.pager.endIdex + 1);
-  }
+  }*/
 }
