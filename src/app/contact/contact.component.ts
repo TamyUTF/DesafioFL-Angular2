@@ -1,9 +1,11 @@
-import { tap, map } from 'rxjs/operators';
-import { ContactService } from '../services/contact.service';
-import { Component, OnInit } from '@angular/core';
-import { Contact } from './contact';
-import { Observable } from '../../../node_modules/rxjs';
+import { tap, map, filter, switchMap, debounceTime } from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable, Subject } from '../../../node_modules/rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
+
+import { ContactService } from '../services/contact.service';
+import { Contact } from './contact';
 
 @Component({
   selector: 'app-contact',
@@ -14,50 +16,66 @@ export class ContactComponent implements OnInit {
   constructor(private contactService: ContactService,
               private router: Router,
               private route: ActivatedRoute) { }
+@ViewChild('toggle') toggle;
+search = new FormControl('');
+contacts$: Observable<Contact[]>;
+contacts: Contact[];
+searchUpdated: Subject<any> = new Subject();
+favAux: false;
+pageIndex = 0;
+pageSize = 5;
+startIndex = 0;
+endIndex = 5;
 
-  contacts$: Observable<Contact[]>;
-  contacts: Contact[];
-  pageIndex = 0;
-  pageSize = 5;
-  startIndex = 0;
-  endIndex = 5;
+showInfo(contact ) {
+  this.router.navigate(['/contact', contact]);
+}
 
+ngOnInit() {
+  this.load(this.contactService.list());
+}
 
-  showInfo(contact ) {
-    this.router.navigate(['/contact', contact]);
+load(contactList) {
+  this.contacts$ = contactList;
+  this.pageIndex = 0;
+  this.pageSize = 6;
+  this.startIndex = 0;
+  this.endIndex = 6;
+}
+
+eventKeyup() {
+  this.search.valueChanges.pipe(debounceTime(500));
+  if (this.toggle.checked) { // lista dentro dos favoritos
+    this.contacts$ = this.contacts$.pipe(
+      map(contact => contact.filter(searchContact =>
+      searchContact.firstName.toLowerCase().includes(this.search.value.toLowerCase()))
+    ));
+  } else {
+    this.contacts$ = this.contacts$.pipe(
+      map(contact => contact.filter(searchContact =>
+        searchContact.firstName.toLowerCase().includes(this.search.value.toLowerCase()))
+    ));
   }
+}
 
-  ngOnInit() {
-    this.load();
-
-  }
-
-  load() {
+getFavorites(event) {
+  if (event.checked) {
+    this.contacts$ = this.contactService.list().pipe(
+      map(contact => contact.filter(favContact => favContact.isFavorite === true))
+    );
+  } else {
     this.contacts$ = this.contactService.list();
-    this.pageIndex = 0;
-    this.pageSize = 6;
-    this.startIndex = 0;
-    this.endIndex = 6;
   }
+}
 
-  getPaginator(event) {
-    if (event.pageIndex === this.pageIndex + 1) {
-      this.startIndex = this.startIndex + this.pageSize;
-      this.endIndex =  this.endIndex + this.pageSize;
-     } else if (event.pageIndex === this.pageIndex - 1) {
-     this.startIndex = this.startIndex - this.pageSize;
-     this.endIndex =  this.endIndex - this.pageSize;
+getPaginator(event) {
+  if (event.pageIndex === this.pageIndex + 1) {
+    this.startIndex = this.startIndex + this.pageSize;
+    this.endIndex =  this.endIndex + this.pageSize;
+    } else if (event.pageIndex === this.pageIndex - 1) {
+    this.startIndex = this.startIndex - this.pageSize;
+    this.endIndex =  this.endIndex - this.pageSize;
     }
-    this.pageIndex = event.pageIndex;
+  this.pageIndex = event.pageIndex;
   }
-
-
-
-  /*setPage(page: number) {
-    if (page < 1 || page > this.pager.totalPages) {
-      return;
-    }
-    this.pager = this.pagerService.getPager(this.contacts.length, page);
-    this.pagedItems = this.contacts.slice(this.pager.startIndex, this.pager.endIdex + 1);
-  }*/
 }

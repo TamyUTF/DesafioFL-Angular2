@@ -2,6 +2,14 @@
   .modal-contact {
     display: block !important;
   }
+
+  .modal-contact .modal-info span p{
+    line-height: normal;
+  }
+
+  .img-fav img {
+    margin: 10px auto !important;
+  }
 }
 
 .modal {
@@ -29,17 +37,21 @@
   display: flex;
   background-color: blueviolet;
   color: #fff;
+  flex-direction: row;
+  align-items: safe !important;
 }
 .modal-header h2 {
   margin: 20px;
 }
-.modal-header .flex-spacer {
-  display: flex;
+
+.modal-header button {
+  float: right;
+  position: relative;
 }
 
 .modal-header .mat-icon-button {
   font-size: 50pt;
-  padding: 10px !important; 
+  padding: 10px !important;
 }
 .bt-close {
   height: 50px;

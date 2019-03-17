@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material';
 import { ContactService } from './../../services/contact.service';
 import { Contact } from './../contact';
 import { MyDialogComponent } from './../../services/my-dialog/my-dialog.component';
-import { CONTEXT } from '@angular/core/src/render3/interfaces/view';
+import { ContactComponent } from './../contact.component';
 
 @Component({
   selector: 'app-contact-info',
@@ -28,7 +28,8 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private contactService: ContactService,
               private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private contactC: ContactComponent) {
   this.favAux = false;
   }
   ngOnInit() {
@@ -36,13 +37,13 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     this.subs = this.route.params.pipe(
       map((params: any) => {
         this.id = params.id;
+        console.log(this.id);
       }),
       switchMap(id => this.contactService.getContact(this.id))// retorna o contato
       ).subscribe(contact => {this.contact = contact;
                               this.favAux = contact.isFavorite;
                             }
         );
-    console.log(this.contact);
   }
 
   editContact() {
@@ -58,30 +59,30 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
       if (result === 'true') {
         console.log(result);
         this.contactService.deleteContact(this.id);
+        this.contactC.load(this.contactService.list());
+        this.close();
       }
     });
   }
 
-  favorite(event) {
-    if (event.checked) { // favoritou
-      this.contactService.getContact(this.id)
-        .subscribe(c => {
-          console.log('antes' + c.isFavorite);
-          c.isFavorite = !c.isFavorite;
-          console.log('depois' + c.isFavorite);
-          this.contactAux = c;
-          this.contactService.updateContact(this.transformContact(c), this.id);
-        });
-    } else {
-      this.contactService.getContact(this.id)
-        .subscribe(c => {
-          console.log('antes' + c.isFavorite);
-          c.isFavorite = !c.isFavorite;
-          console.log('depois' + c.isFavorite);
-          this.contactAux = c;
-          this.contactService.updateContact(this.transformContact(c), this.id);
-        });
-    }
+favorite(event) {
+  if (event.checked) { // favoritou
+    this.contactService.getContact(this.id)
+      .subscribe(c => {
+        c.isFavorite = !c.isFavorite;
+        this.contactAux = c;
+        this.contactService.updateContact(this.transformContact(c), this.id);
+        this.contactC.load(this.contactService.list());
+      });
+  } else {
+    this.contactService.getContact(this.id)
+      .subscribe(c => {
+        c.isFavorite = !c.isFavorite;
+        this.contactAux = c;
+        this.contactService.updateContact(this.transformContact(c), this.id);
+        this.contactC.load(this.contactService.list());
+      });
+  }
   }
 
   transformContact(c) {
@@ -107,6 +108,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     console.log('info component foi destruido');
+    this.contact = undefined;
     this.subs.unsubscribe();
   }
 

@@ -8,9 +8,21 @@ body{
 };
 
 .container {
-    padding: 0 20px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-content: center ;
+  justify-content: center ;
 }
 
 .mat-tab-nav-bar{
-    font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
+}
+
+.mat-paginator-container {
+  justify-content: center !important;
+}
+
+.mat-progress-spinner {
+  margin: 100px;
 }

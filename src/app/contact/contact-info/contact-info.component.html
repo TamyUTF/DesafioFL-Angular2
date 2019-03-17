@@ -1,7 +1,8 @@
 <div class = "modal">
+  <ng-container *ngIf = "contact">
   <div class = "modal-container"  #modal>
     <div class = "modal-header" color='primary'>
-        <h2 *ngIf="contact">{{ contact.firstName }} {{ contact.lastName }}</h2>
+        <h2 *ngIf="contact">{{ contact?.firstName }} {{ contact?.lastName }}</h2>
         <div class = "flex-spacer"></div>
         <button mat-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
@@ -22,7 +23,7 @@
     </div>
     <section class = "modal-contact">
       <section class="img-fav">
-        <mat-slide-toggle 
+        <mat-slide-toggle
         color="accent"
         (change)= "favorite($event)"
         [checked] = "favAux"
@@ -33,15 +34,16 @@
         <img src={{contact.info.avatar}}>
       </section>
       <section class="modal-info" >
-        <span><p class="info-title">E-mail: </p><p> {{contact.email}}</p></span>
-        <span><p class="info-title">Sexo: </p><p> {{contact.gender}}</p></span>
-        <span><p class="info-title">Empresa: </p><p>{{contact.info.company}}</p></span>
-        <span><p class="info-title">Endereço: </p><p>{{contact.info.address}}</p></span>
-        <span><p class="info-title">Telefone: </p><p>{{contact.info.phone}}</p></span>
+        <span><p class="info-title">E-mail: </p> <p> {{contact?.email}}</p></span>
+        <span><p class="info-title">Sexo: </p> <p> {{contact?.gender}}</p></span>
+        <span><p class="info-title">Empresa: </p> <p>{{contact?.info.company}}</p></span>
+        <span><p class="info-title">Endereço: </p> <p>{{contact?.info.address}}</p></span>
+        <span><p class="info-title">Telefone: </p> <p>{{contact?.info.phone}}</p></span>
       </section>
     </section>
       <div class="modal-comments">
-        <span><p class="info-title">Comentarios:</p><p>{{contact.info.comments}}</p></span>
+        <span><p class="info-title">Comentarios:</p><p>{{contact?.info.comments}}</p></span>
       </div>
     </div>
+  </ng-container>
 </div>

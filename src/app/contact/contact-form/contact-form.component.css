@@ -1,3 +1,10 @@
+@mediaonly screen and (max-width: 720px) {
+  .form-small-info mat-form-field{
+    width: 100%;
+  }
+
+}
+
 .modal {
     position: fixed;
     top:0;
@@ -20,25 +27,39 @@
 }
 .form {
     padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-.form-small-info mat-form-fiel{
-  margin: 0 20px;
-  display: flex;
+.form button {
+  width: 100%;
 }
+
 
 .form-info {
     display: grid;
 }
 
-.form-info button {
-    width: 100%;
+.form-info mat-form-field {
+  margin: 0 10px;
+}
+
+.form-small-info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-small-info mat-form-field {
+  margin: 0 10px;
 }
 
 .modal-header {
     display: flex;
     background-color: blueviolet;
     color: #fff;
+    flex-direction: row;
+    align-items: baseline;
 }
 
 .modal-header h2{

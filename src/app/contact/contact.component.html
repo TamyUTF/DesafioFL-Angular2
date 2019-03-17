@@ -1,66 +1,69 @@
-<form>
-  <mat-form-field class="search-input" appearance="outline">
-    <input
-      type="text"
-      matInput placeholder="Pesquise um contato"
-      floatLabel="never">
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-</form>
-
 <div class="container">
+  <section class="search">
+    <form>
+      <mat-form-field class="search-input" appearance="outline">
+        <input
+          [formControl]="search"
+          type="text"
+          matInput
+          placeholder="Pesquise um contato"
+          floatLabel="never"
+          (keyup)="eventKeyup()"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </form>
+    <mat-slide-toggle
+      #toggle
+      color="accent"
+      (change)="getFavorites($event)"
+      [checked]="favAux"
+    >
+      Mostrar Favoritos
+    </mat-slide-toggle>
+  </section>
 
-<div *ngIf = "contacts$ | async as contacts; else loading">
-  <mat-card *ngFor="let contact of contacts | slice: startIndex : endIndex" [routerLink] ="['/contact', contact.id]">
-    <mat-card-header>
-      <img mat-card-avatar src={{contact.info.avatar}}>
-      <mat-card-title>{{ contact.firstName }} {{ contact.lastName }}</mat-card-title>
-      <div class="flex-spacer"></div>
-      <mat-icon *ngIf = "contact.isFavorite" color="warn">favorite</mat-icon>
-      <mat-card-subtitle>{{ contact.info.phone }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <p>
-          Esse card deve aparecer.
-        </p>
-      </mat-card-content>
-      <mat-card-actions layout-align = "end center">
-        <button mat-button color="primary">Editar</button>
-        <button mat-button color="warn">Deletar</button>
-      </mat-card-actions>
-  </mat-card>
+  <ng-container *ngIf="(contacts$ | async) as contacts; else loading">
+      <div class="contact-list">
+        <mat-card
+          *ngFor="let contact of (contacts | slice: startIndex:endIndex)"
+          [routerLink]="['/contact', contact.id]"
+        >
+          <mat-card-header>
+            <img mat-card-avatar src="{{ contact.info.avatar }}" />
+            <mat-card-title
+              >{{ contact.firstName }} {{ contact.lastName }}</mat-card-title
+            >
+            <div class="flex-spacer"></div>
+            <mat-icon *ngIf="contact.isFavorite" color="warn"
+              >favorite</mat-icon
+            >
+            <mat-card-subtitle>{{ contact.info.phone }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p><span>E-mail:</span> {{ contact.email }}</p>
 
-  <div class = "paginator">
-    <mat-paginator
-        [length]="contacts.length"
-        [pageSize]="pageSize"
-        [hidePageSize]= "true"
-        [showFirstLastButtons]="false"
-        (page)="pageEvent = getPaginator($event)"
-      >
-    </mat-paginator>
-  </div>
+            <p><span>Empresa:</span> {{ contact.info.company }}</p>
 
-  <!--div *ngIf="pager.pages && pager.pages.length" class="pagination">
-    <button mat-icon-button
-      [ngClass]="{disabled:page.currentPage === 1}"
-      (click)="setPage(pager.currentPage - 1)">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>{{ page }}</span>
-    <button mat-icon-button
-      [ngClass]="{disabled:page.currentPage === pager.totalPages}"
-      (click)="setPage(pager.currentPage + 1)">
-    <mat-icon>arrow_forward</mat-icon></button>
-  </div-->
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="paginator">
+          <mat-paginator
+            [length]="contacts.length"
+            [pageSize]="pageSize"
+            [hidePageSize]="true"
+            [showFirstLastButtons]="false"
+            (page)="pageEvent = getPaginator($event)"
+          >
+          </mat-paginator>
+        </div>
+
+  <ng-template #loading>
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </ng-template>
+
+</ng-container>
 </div>
-
-<ng-template #loading >
-  <mat-progress-spinner
-    color='primary'
-    mode='indeterminate'>
-  </mat-progress-spinner>
-</ng-template>
-</div>
-
 <router-outlet></router-outlet>
