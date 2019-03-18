@@ -23,7 +23,7 @@
     </mat-slide-toggle>
   </section>
 
-  <ng-container *ngIf="(contacts$ | async) as contacts; else loading">
+  <ng-container *ngIf="(contactService.contacts$ | async) as contacts; else loading">
       <div class="contact-list">
         <mat-card
           *ngFor="let contact of (contacts | slice: startIndex:endIndex)"

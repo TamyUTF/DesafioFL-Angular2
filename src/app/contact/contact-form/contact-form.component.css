@@ -66,10 +66,6 @@
     margin: 20px;
 }
 
-.modal-header mat-icon {
-  padding: 15px;
-}
-
 .flex-spacer {
     display: flex;
 }

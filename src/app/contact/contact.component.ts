@@ -23,20 +23,25 @@ contacts: Contact[];
 searchUpdated: Subject<any> = new Subject();
 favAux: false;
 pageIndex = 0;
-pageSize = 5;
+pageSize = 6;
 startIndex = 0;
-endIndex = 5;
+endIndex = 6;
 
 showInfo(contact ) {
   this.router.navigate(['/contact', contact]);
 }
 
 ngOnInit() {
-  this.load(this.contactService.list());
+  this.contactService.list();
+  this.eventListener();
 }
 
-load(contactList) {
-  this.contacts$ = contactList;
+eventListener() {
+  this.contactService.event.subscribe(event => this.load());
+}
+
+load() {
+  this.contactService.list();
   this.pageIndex = 0;
   this.pageSize = 6;
   this.startIndex = 0;
@@ -46,12 +51,12 @@ load(contactList) {
 eventKeyup() {
   this.search.valueChanges.pipe(debounceTime(500));
   if (this.toggle.checked) { // lista dentro dos favoritos
-    this.contacts$ = this.contacts$.pipe(
+    this.contactService.contacts$ = this.contactService.contacts$.pipe(
       map(contact => contact.filter(searchContact =>
       searchContact.firstName.toLowerCase().includes(this.search.value.toLowerCase()))
     ));
   } else {
-    this.contacts$ = this.contacts$.pipe(
+    this.contactService.contacts$ = this.contactService.contacts$.pipe(
       map(contact => contact.filter(searchContact =>
         searchContact.firstName.toLowerCase().includes(this.search.value.toLowerCase()))
     ));
@@ -60,11 +65,11 @@ eventKeyup() {
 
 getFavorites(event) {
   if (event.checked) {
-    this.contacts$ = this.contactService.list().pipe(
+    this.contactService.contacts$ = this.contactService.contacts$.pipe(
       map(contact => contact.filter(favContact => favContact.isFavorite === true))
     );
   } else {
-    this.contacts$ = this.contactService.list();
+    this.contactService.list();
   }
 }
 

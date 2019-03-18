@@ -78,15 +78,10 @@ updateForm(contact) {
   });*/
 }
 
-resetForm() {
-  this.form.reset();
-}
-
 onSubmit() {
   if (this.form.valid) {
     this.catchContactData();
-    this.contactC.load(this.contactService.list());
-    this.router.navigate(['contact', this.id]);
+    this.contactService.list();
   } else {
     this.contactService.openSnackBar('Por favor, preencha todos os campos', 'Ok!');
   }
@@ -117,9 +112,23 @@ catchContactData() {
   };
   console.log(contact);
   if (this.id !== undefined) { // update
-    this.contactService.updateContact(contact, this.id);
+    this.sub = this.contactService.updateContact(contact, this.id).subscribe(
+      res => (this.contactService.openSnackBar('Contato alterado com sucesso', 'Ok!'),
+      this.contactService.list(),
+      this.router.navigate(['contact', this.id])),
+      error => {
+        console.error('Ocorreu um erro' + error);
+      }
+    );
   } else {// create
-    this.contactService.createContact(contact);
+    this.sub = this.contactService.createContact(contact).subscribe(
+      res => (this.contactService.openSnackBar('Contato criado com sucesso!', 'Ok!'),
+              this.contactService.list(),
+              this.close()),
+      error => {
+        console.error('Ocorreu um erro' + error);
+      }
+    );
   }
 }
 

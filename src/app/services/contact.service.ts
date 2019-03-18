@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap, delay, map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -12,7 +12,8 @@ import { Contact } from '../contact/contact';
 })
 export class ContactService implements OnDestroy {
   private readonly API = `${environment.API}api/contacts`;
-  private contacts$: Observable<Contact[]>;
+  event = new EventEmitter();
+  contacts$: Observable<Contact[]>;
   contacts: Contact[];
   contact: Contact;
   private subs: Subscription;
@@ -44,7 +45,7 @@ getContact(id: any) {
 }
 
 list() {
-  return this.http.get<any[]>(this.API)
+  this.contacts$ = this.http.get<any[]>(this.API)
   .pipe(
     delay(200));
 }
@@ -52,6 +53,8 @@ list() {
 deleteContact(id) {
   this.http.delete(`${this.API}/${id}`).pipe(take(1)).subscribe(res => {
     console.log(res);
+    this.event.emit();
+    this.list();
     this.openSnackBar('Contato deletado com sucesso!', 'Uhul!');
   },
   error => {
@@ -65,22 +68,12 @@ ngOnDestroy() {
   this.subs.unsubscribe();
 }
 
-updateContact(contact: Contact, id: string) {
-  this.http.put(`${this.API}/${id}`, contact).pipe(take(1)).subscribe(
-    res => this.openSnackBar('Contato alterado com sucesso', 'Ok!'),
-    error => {
-      console.error('Ocorreu um erro' + error);
-    }
-  );
+public updateContact(contact: Contact, id: string) {
+  return this.http.put(`${this.API}/${id}`, contact);
 }
 
 createContact(contact) {
-  this.subs = this.http.post(this.API, contact).subscribe(
-    res => this.openSnackBar('Contato criado com sucesso!', 'Ok!'),
-    error => {
-      console.error('Ocorreu um erro' + error);
-    }
-  );
+  return this.http.post(this.API, contact);
 }
 
 openSnackBar(msg, action) {

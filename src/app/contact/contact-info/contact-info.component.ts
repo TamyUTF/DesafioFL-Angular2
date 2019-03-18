@@ -59,7 +59,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
       if (result === 'true') {
         console.log(result);
         this.contactService.deleteContact(this.id);
-        this.contactC.load(this.contactService.list());
+        this.contactService.list();
         this.close();
       }
     });
@@ -71,16 +71,26 @@ favorite(event) {
       .subscribe(c => {
         c.isFavorite = !c.isFavorite;
         this.contactAux = c;
-        this.contactService.updateContact(this.transformContact(c), this.id);
-        this.contactC.load(this.contactService.list());
+        this.contactService.updateContact(this.transformContact(c), this.id).subscribe(
+          res => (this.contactService.openSnackBar('Contato alterado com sucesso', 'Ok!'),
+          this.contactService.list()),
+          error => {
+            console.error('Ocorreu um erro' + error);
+          }
+        );
       });
   } else {
     this.contactService.getContact(this.id)
       .subscribe(c => {
         c.isFavorite = !c.isFavorite;
         this.contactAux = c;
-        this.contactService.updateContact(this.transformContact(c), this.id);
-        this.contactC.load(this.contactService.list());
+        this.contactService.updateContact(this.transformContact(c), this.id).subscribe(
+          res => (this.contactService.openSnackBar('Contato alterado com sucesso', 'Ok!'),
+          this.contactService.list()),
+          error => {
+            console.error('Ocorreu um erro' + error);
+          }
+        );
       });
   }
   }

@@ -2,24 +2,25 @@
   <ng-container *ngIf = "contact">
   <div class = "modal-container"  #modal>
     <div class = "modal-header" color='primary'>
-        <h2 *ngIf="contact">{{ contact?.firstName }} {{ contact?.lastName }}</h2>
-        <div class = "flex-spacer"></div>
-        <button mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="editContact()">
-              <mat-icon>edit</mat-icon>
-              <span>Editar</span>
-            </button>
-            <button mat-menu-item (click)="deleteContact()">
-              <mat-icon>delete</mat-icon>
-              <span>Excluir</span>
-            </button>
-          </mat-menu>
-          <button class="bt-close" mat-icon-button (click)="close()">
-            <mat-icon>clear</mat-icon>
+        <h2 style = "width: 100%" *ngIf="contact">{{ contact?.firstName }} {{ contact?.lastName }}</h2>
+        
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
           </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="editContact()">
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+              </button>
+              <button mat-menu-item (click)="deleteContact()">
+                <mat-icon>delete</mat-icon>
+                <span>Excluir</span>
+              </button>
+            </mat-menu>
+            <button class="bt-close" mat-icon-button (click)="close()">
+              <mat-icon>clear</mat-icon>
+            </button>
+         
     </div>
     <section class = "modal-contact">
       <section class="img-fav">
